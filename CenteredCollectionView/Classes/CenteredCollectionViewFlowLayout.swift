@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UICollectionView {
+@objc public extension UICollectionView {
     /// A convenient way to create a UICollectionView and configue it with a CenteredCollectionViewFlowLayout.
     ///
     /// - Parameters:
@@ -21,11 +21,11 @@ public extension UICollectionView {
 }
 
 /// A `UICollectionViewFlowLayout` that _pages_ and keeps its cells centered, resulting in the _"carousel effect"_ 🎡
-open class CenteredCollectionViewFlowLayout: UICollectionViewFlowLayout {
+@objc open class CenteredCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private var lastCollectionViewSize: CGSize = CGSize.zero
     private var lastScrollDirection: UICollectionView.ScrollDirection!
     private var lastItemSize: CGSize = CGSize.zero
-    var pageWidth: CGFloat {
+    @objc var pageWidth: CGFloat {
         switch scrollDirection {
         case .horizontal:
             return itemSize.width + minimumLineSpacing
@@ -37,11 +37,12 @@ open class CenteredCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     /// Calculates the current centered page.
-    public var currentCenteredPage: Int? {
-        guard let collectionView = collectionView else { return nil }
+    @objc public var currentCenteredPage: Int {
+        guard let collectionView = collectionView else { return 0 }
         let currentCenteredPoint = CGPoint(x: collectionView.contentOffset.x + collectionView.bounds.width/2, y: collectionView.contentOffset.y + collectionView.bounds.height/2)
         
-        return collectionView.indexPathForItem(at: currentCenteredPoint)?.row
+        guard let indexPath = collectionView.indexPathForItem(at: currentCenteredPoint) else {return 0}
+        return indexPath.row
     }
     
     public override init() {
@@ -127,7 +128,7 @@ open class CenteredCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// - Parameters:
     ///   - index: The index of the page to scroll to.
     ///   - animated: Whether the scroll should be performed animated.
-    public func scrollToPage(index: Int, animated: Bool) {
+    @objc public func scrollToPage(index: Int, animated: Bool) {
         guard let collectionView = collectionView else { return }
         
         let proposedContentOffset: CGPoint
