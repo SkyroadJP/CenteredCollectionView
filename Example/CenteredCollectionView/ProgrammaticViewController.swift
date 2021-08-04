@@ -84,9 +84,8 @@ extension ProgrammaticViewController: ControlCenterViewDelegate {
 extension ProgrammaticViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		print("Selected Cell #\(indexPath.row)")
-		if scrollToEdgeEnabled,
-			let currentCenteredPage = centeredCollectionViewFlowLayout.currentCenteredPage,
-			currentCenteredPage != indexPath.row {
+        let currentCenteredPage = centeredCollectionViewFlowLayout.currentCenteredPage
+		if scrollToEdgeEnabled, currentCenteredPage != indexPath.row {
 			centeredCollectionViewFlowLayout.scrollToPage(index: indexPath.row, animated: true)
 		}
 	}
