@@ -38,10 +38,10 @@ import UIKit
     
     /// Calculates the current centered page.
     @objc public var currentCenteredPage: Int {
-        guard let collectionView = collectionView else { return 0 }
+        guard let collectionView = collectionView else { return -1 }
         let currentCenteredPoint = CGPoint(x: collectionView.contentOffset.x + collectionView.bounds.width/2, y: collectionView.contentOffset.y + collectionView.bounds.height/2)
         
-        guard let indexPath = collectionView.indexPathForItem(at: currentCenteredPoint) else {return 0}
+        guard let indexPath = collectionView.indexPathForItem(at: currentCenteredPoint) else {return -1}
         return indexPath.row
     }
     
